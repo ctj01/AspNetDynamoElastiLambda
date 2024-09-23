@@ -27,7 +27,7 @@ This project demonstrates how to build an ASP.NET application that uses AWS Lamb
 1. **Clone the repository**:
 
    ````bash
-   git clone https://github.com/tu_usuario/AspNetDynamoElastiLambda.git
+   git clone https://github.com/ctj01/AspNetDynamoElastiLambda.git
    ```
 
 2. **Navigate to the project directory**:
