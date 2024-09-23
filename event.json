@@ -1,0 +1,31 @@
+{
+    "Records": [
+        {
+            "eventName": "MODIFY",
+            "dynamodb": {
+                "OldImage": {
+                    "id": {
+                        "S": "26"
+                    },
+                    "title": {
+                        "S": "Othello (1995)"
+                    },
+                    "genres": {
+                        "S": "Drama"
+                    }
+                },
+                "NewImage": {
+                    "id": {
+                        "S": "26"
+                    },
+                    "title": {
+                        "S": "Othello (Prueba)"
+                    },
+                    "genres": {
+                        "S": "Drama Fiction"
+                    }
+                }
+            }
+        }
+    ]
+}

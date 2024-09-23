@@ -1,0 +1,140 @@
+
+# AspNetDynamoElastiLambda
+
+An ASP.NET integration with DynamoDB, Elasticsearch and AWS Lambda to create an efficient and scalable search solution.
+
+## Description
+
+This project demonstrates how to build an ASP.NET application that uses AWS Lambda to synchronize data between DynamoDB and Elasticsearch. It provides a serverless approach to effectively manage and search data in modern applications.
+
+## Technologies Used
+
+- ASP.NET**: Framework for building web applications.
+- DynamoDB**: Amazon NoSQL database that provides fast performance and scalability.
+- Elasticsearch**: Search and data analysis engine for advanced search.
+- AWS Lambda**: Serverless service that executes code in response to events.
+- Docker**: Platform for developing, shipping and running containerized applications.
+- Docker Compose**: Tool for defining and running multi-container applications.
+
+## Functionalities
+
+- Data insertion and synchronization in DynamoDB.
+- Efficient searches using Elasticsearch.
+- Lambda function to handle DynamoDB events and update Elasticsearch.
+
+## Installation
+
+1. **Clone the repository**:
+
+   ````bash
+   git clone https://github.com/tu_usuario/AspNetDynamoElastiLambda.git
+   ```
+
+2. **Navigate to the project directory**:
+
+   ````bash
+   cd AspNetDynamoElastiLambda
+   ```
+
+3. **Build and run the containers**:
+
+   ````bash
+   docker-compose up --build
+   ```
+
+4. **Configure the credentials**:
+   Make sure that AWS credentials are configured to access DynamoDB and Elasticsearch.
+
+## AWS CLI Commands
+
+### DynamoDB configuration
+
+1. **Create the table**:
+
+   ````bash
+   aws dynamodb create-table \
+       --table-name movies
+       --attribute-definitions AttributeName=id,AttributeType=S \
+       --key-schema AttributeName=id,AttributeType=HASH \ --key-schema AttributeName=id,KeyType=HASH \
+       --billing-mode PAY_PER_REQUEST \
+       --endpoint-url http://localhost:8000
+   ```
+
+2. **Insert data from a JSON file**:
+
+   ````bash
+   aws dynamodb batch-write-item --request-items file://movies.json --endpoint-url http://localhost:8000
+   ```
+
+3. **List the tables**:
+
+   ````bash
+   aws dynamodb list-tables --endpoint-url http://localhost:8000
+   ```
+
+4. **Describe the table**:
+
+   ````bash
+   aws dynamodb describe-table --table-name movies --endpoint-url http://localhost:8000
+   ```
+
+5. **Update the table to enable streams**:
+
+   ````bash
+   aws dynamodb update-table --table-name movies
+       --table-name movies
+       --stream-specification StreamEnabled=true,StreamViewType=NEW_AND_OLD_IMAGES \
+       --endpoint-url http://localhost:8000
+   ```
+
+### AWS Lambda configuration
+
+1. **Create Lambda function**:
+
+   ````bash
+   aws --endpoint-url=http://localhost:4566 lambda create-function \
+       --function-name SyncDynamoWithElastic \
+       --zip-file fileb://lambda.zip \
+       --handler lambda.handler \
+       --runtime nodejs18.x \
+       --role arn:aws:iam::000000000000:role/lambda-role \
+       --timeout 10
+   ```
+
+2. **Invoke the Lambda function**:
+
+   ````bash
+   aws --endpoint-url=http://localhost:4566 lambda invoke ````.
+       --cli-binary-format raw-in-base64-out \
+       --function-name SyncDynamoWithElastic \
+       --payload file://event.json \ --payload file://event.json \
+       response_update.json
+   ```
+
+3. **Delete Lambda function**:
+
+   ````bash
+   aws --endpoint-url=http://localhost:4566 lambda delete-function --function-name SyncDynamoWithElastic
+   ```
+
+4. **Get information about the Lambda function**:
+
+   ````bash
+   aws lambda get-function --function-name SyncDynamoWithElastic
+   ```
+
+## Usage
+
+1. **Inserts a new record**:
+   Make a POST request to `/api/movies` with the movie data in the request body.
+
+2. **Find movies**:
+   Performs a GET request to `/api/movies/search` with the search term as the query parameter.
+
+## Contributions
+
+Contributions are welcome! If you have any ideas or improvements, feel free to open an issue or pull request.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
